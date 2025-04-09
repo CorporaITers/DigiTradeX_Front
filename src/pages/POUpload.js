@@ -135,7 +135,7 @@ const POUpload = () => {
           local_kw: 'true'
         },
         // タイムアウト設定
-        timeout: 30000, // 30秒
+        timeout: 90000, // 90秒
         withCredentials: false
       });
       
