@@ -52,7 +52,8 @@ const POUpload = () => {
 
   // 合計金額の自動計算（手動編集モードでない場合のみ）
   useEffect(() => {
-    if (!manualTotalEdit && poData.products && poData.products.length > 0) {
+    const parsedTotal = parseFloat((poData.total_amount || '0').replace(/,/g, ''));
+    if (!manualTotalEdit && poData.products && poData.products.length > 0 && (parsedTotal === 0 || isNaN(parsedTotal))) {
       const total = poData.products.reduce((sum, product) => {
         const amount = parseFloat(product.amount) || 0;
         return sum + amount;
