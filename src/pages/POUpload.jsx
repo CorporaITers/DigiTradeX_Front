@@ -62,6 +62,8 @@ const POUpload = () => {
         ...prevData,
         total_amount: total.toFixed(2)
       }));
+      setPoData(normalizedData);
+      setManualTotalEdit(true); // ← APIから受け取ったtotalを優先したいとき
     }
   }, [poData.products, manualTotalEdit]);
 
