@@ -52,36 +52,27 @@ const POUpload = () => {
 
   // 合計金額の自動計算（手動編集モードでない場合のみ）
   useEffect(() => {
-    const parsedTotal = parseFloat((poData.total_amount || '0').replace(/,/g, ''));
-  
-    if (
-      !manualTotalEdit &&
-      poData.products &&
-      poData.products.length > 0 &&
-      (parsedTotal === 0 || isNaN(parsedTotal))
-    ) {
+    if (!manualTotalEdit && poData.products && poData.products.length > 0) {
       const total = poData.products.reduce((sum, product) => {
-        const amountStr = (product.amount || '').replace(/,/g, '');
-        const amount = parseFloat(amountStr) || 0;
+        const amount = parseFloat(product.amount) || 0;
         return sum + amount;
       }, 0);
-  
+      
       setPoData(prevData => ({
         ...prevData,
         total_amount: total.toFixed(2)
       }));
     }
-  }, [poData.products, manualTotalEdit, poData.total_amount]);  
+  }, [poData.products, manualTotalEdit]);
 
   // 合計金額の手動編集ハンドラ
   const handleTotalAmountChange = (e) => {
-    setManualTotalEdit(true);
-    const raw = e.target.value.replace(/,/g, '');
+    setManualTotalEdit(true); // 手動編集モードをオン
     setPoData(prevData => ({
       ...prevData,
-      total_amount: raw
+      total_amount: e.target.value
     }));
-  };  
+  };
 
   // ファイルアップロード処理
   const handleFileUpload = async (file) => {
@@ -456,7 +447,6 @@ const POUpload = () => {
         
         // 正規化したデータを状態に設定
         setPoData(normalizedData);
-        setManualTotalEdit(true); // ← APIから受け取ったtotalを優先したいとき
         setIsProcessing(false);
         setViewMode('summary');
         
