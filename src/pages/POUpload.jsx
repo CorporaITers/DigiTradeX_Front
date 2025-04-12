@@ -53,12 +53,18 @@ const POUpload = () => {
   // 合計金額の自動計算（手動編集モードでない場合のみ）
   useEffect(() => {
     const parsedTotal = parseFloat((poData.total_amount || '0').replace(/,/g, ''));
-    if (!manualTotalEdit && poData.products && poData.products.length > 0 && (parsedTotal === 0 || isNaN(parsedTotal))) {
+  
+    if (
+      !manualTotalEdit &&
+      poData.products &&
+      poData.products.length > 0 &&
+      (parsedTotal === 0 || isNaN(parsedTotal))
+    ) {
       const total = poData.products.reduce((sum, product) => {
         const amount = parseFloat((product.amount || '').replace(/,/g, '')) || 0;
         return sum + amount;
       }, 0);
-      
+  
       setPoData(prevData => ({
         ...prevData,
         total_amount: total.toFixed(2)
@@ -68,14 +74,13 @@ const POUpload = () => {
 
   // 合計金額の手動編集ハンドラ
   const handleTotalAmountChange = (e) => {
-    setManualTotalEdit(true); // 手動編集モードをオン
-    const raw = e.target.value.replace(/,/g, ''); // カンマ除去しても良い
+    setManualTotalEdit(true);
+    const raw = e.target.value.replace(/,/g, '');
     setPoData(prevData => ({
       ...prevData,
-      // total_amount: e.target.value
       total_amount: raw
     }));
-  };
+  };  
 
   // ファイルアップロード処理
   const handleFileUpload = async (file) => {
