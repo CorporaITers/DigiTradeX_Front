@@ -376,46 +376,34 @@ const POUpload = () => {
         if (Array.isArray(extractedData.products) && extractedData.products.length > 0) {
           // 標準的な製品配列形式
           products = extractedData.products.map(product => ({
-            // product_name: product.product_name || product.name || product.productName || product.description || '',
-            // quantity: product.quantity || product.qty || '',
-            // unit_price: product.unit_price || product.unitPrice || product.price || '',
-            // amount: product.amount || product.subtotal || (
-            //   product.quantity && product.unit_price 
-            //     ? (parseFloat(product.quantity) * parseFloat(product.unit_price)).toString()
-            //     : ''
-            // )
             product_name: product.product_name || product.name || product.productName || product.description || '',
-            quantity: (product.quantity || product.qty || '').toString().replace(/,/g, ''),
-            unit_price: (product.unit_price || product.unitPrice || product.price || '').toString().replace(/,/g, ''),
-            amount: (product.amount || product.subtotal || '').toString().replace(/,/g, '')            
+            quantity: product.quantity || product.qty || '',
+            unit_price: product.unit_price || product.unitPrice || product.price || '',
+            amount: product.amount || product.subtotal || (
+              product.quantity && product.unit_price 
+                ? (parseFloat(product.quantity) * parseFloat(product.unit_price)).toString()
+                : ''
+            )
           }));
         } else if (Array.isArray(extractedData.items) && extractedData.items.length > 0) {
           // 代替の製品配列形式
           products = extractedData.items.map(item => ({
-            // product_name: item.product_name || item.name || item.productName || item.description || '',
-            // quantity: item.quantity || item.qty || '',
-            // unit_price: item.unit_price || item.unitPrice || item.price || '',
-            // amount: item.amount || item.subtotal || (
-            //   item.quantity && item.unit_price 
-            //     ? (parseFloat(item.quantity) * parseFloat(item.unit_price)).toString()
-            //     : ''
-            // )
             product_name: item.product_name || item.name || item.productName || item.description || '',
-            quantity: (item.quantity || item.qty || '').toString().replace(/,/g, ''),
-            unit_price: (item.unit_price || item.unitPrice || item.price || '').toString().replace(/,/g, ''),
-            amount: (item.amount || item.subtotal || '').toString().replace(/,/g, '')
+            quantity: item.quantity || item.qty || '',
+            unit_price: item.unit_price || item.unitPrice || item.price || '',
+            amount: item.amount || item.subtotal || (
+              item.quantity && item.unit_price 
+                ? (parseFloat(item.quantity) * parseFloat(item.unit_price)).toString()
+                : ''
+            )
           }));
         } else {
           // 製品情報が構造化されていない場合のデフォルト
           products = [{
-            // product_name: extractedData.product_name || extractedData.productName || extractedData.name || '',
-            // quantity: extractedData.quantity || '',
-            // unit_price: extractedData.unit_price || extractedData.unitPrice || '',
-            // amount: extractedData.amount || extractedData.subtotal || ''
             product_name: extractedData.product_name || extractedData.productName || extractedData.name || '',
-            quantity: (extractedData.quantity || '').toString().replace(/,/g, ''),
-            unit_price: (extractedData.unit_price || extractedData.unitPrice || '').toString().replace(/,/g, ''),
-            amount: (extractedData.amount || extractedData.subtotal || '').toString().replace(/,/g, '')
+            quantity: extractedData.quantity || '',
+            unit_price: extractedData.unit_price || extractedData.unitPrice || '',
+            amount: extractedData.amount || extractedData.subtotal || ''
           }];
         }
         
@@ -424,8 +412,7 @@ const POUpload = () => {
           if (!product.amount && product.quantity && product.unit_price) {
             const quantity = parseFloat(product.quantity) || 0;
             const unitPrice = parseFloat(product.unit_price) || 0;
-            // product.amount = (quantity * unitPrice).toString();
-            product.amount = (quantity * unitPrice).toFixed(2);
+            product.amount = (quantity * unitPrice).toString();
           }
           return product;
         });
@@ -537,18 +524,27 @@ const POUpload = () => {
   
   // 製品フィールドの変更ハンドラ
   const handleProductChange = (index, field, value) => {
+    const cleanedValue = value.replace(/,/g, '');
+
     setPoData(prevData => {
       const updatedProducts = [...prevData.products];
       updatedProducts[index] = {
         ...updatedProducts[index],
-        [field]: value
+        // [field]: value
+        [field]: cleanedValue
       };
       
       // 数量または単価が変更された場合、金額を自動計算
       if (field === 'quantity' || field === 'unit_price') {
-        const quantity = field === 'quantity' ? parseFloat(value) || 0 : parseFloat(updatedProducts[index].quantity) || 0;
-        const unitPrice = field === 'unit_price' ? parseFloat(value) || 0 : parseFloat(updatedProducts[index].unit_price) || 0;
-        updatedProducts[index].amount = (quantity * unitPrice).toString();
+        // const quantity = field === 'quantity' ? parseFloat(value) || 0 : parseFloat(updatedProducts[index].quantity) || 0;
+        // const unitPrice = field === 'unit_price' ? parseFloat(value) || 0 : parseFloat(updatedProducts[index].unit_price) || 0;
+        const rawQuantity = field === 'quantity' ? value : updatedProducts[index].quantity;
+        const rawUnitPrice = field === 'unit_price' ? value : updatedProducts[index].unit_price;
+      
+        const quantity = parseFloat((rawQuantity || '').toString().replace(/,/g, '')) || 0;
+        const unitPrice = parseFloat((rawUnitPrice || '').toString().replace(/,/g, '')) || 0;
+        // updatedProducts[index].amount = (quantity * unitPrice).toString();
+        updatedProducts[index].amount = (quantity * unitPrice).toFixed(2);
       }
       
       return {
