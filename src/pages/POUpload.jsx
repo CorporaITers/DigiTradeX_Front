@@ -379,14 +379,9 @@ const POUpload = () => {
             product_name: product.product_name || product.name || product.productName || product.description || '',
             quantity: product.quantity || product.qty || '',
             unit_price: product.unit_price || product.unitPrice || product.price || '',
-            // amount: product.amount || product.subtotal || (
-            //   product.quantity && product.unit_price 
-            //     ? (parseFloat(product.quantity) * parseFloat(product.unit_price)).toString()
-            amount: product.amount?.toString().replace(/,/g, '') ||
-            product.subtotal?.toString().replace(/,/g, '') ||
-            (
+            amount: product.amount || product.subtotal || (
               product.quantity && product.unit_price 
-                ? (parseFloat(product.quantity.toString().replace(/,/g, '')) * parseFloat(product.unit_price.toString().replace(/,/g, ''))).toFixed(2)
+                ? (parseFloat(product.quantity) * parseFloat(product.unit_price)).toString()
             : ''
             )
           }));
@@ -541,15 +536,10 @@ const POUpload = () => {
       
       // 数量または単価が変更された場合、金額を自動計算
       if (field === 'quantity' || field === 'unit_price') {
-        // const quantity = field === 'quantity' ? parseFloat(value) || 0 : parseFloat(updatedProducts[index].quantity) || 0;
-        // const unitPrice = field === 'unit_price' ? parseFloat(value) || 0 : parseFloat(updatedProducts[index].unit_price) || 0;
-        const rawQuantity = field === 'quantity' ? value : updatedProducts[index].quantity;
-        const rawUnitPrice = field === 'unit_price' ? value : updatedProducts[index].unit_price;
+        const quantity = field === 'quantity' ? parseFloat(value) || 0 : parseFloat(updatedProducts[index].quantity) || 0;
+        const unitPrice = field === 'unit_price' ? parseFloat(value) || 0 : parseFloat(updatedProducts[index].unit_price) || 0;
       
-        const quantity = parseFloat((rawQuantity || '').toString().replace(/,/g, '')) || 0;
-        const unitPrice = parseFloat((rawUnitPrice || '').toString().replace(/,/g, '')) || 0;
-        // updatedProducts[index].amount = (quantity * unitPrice).toString();
-        updatedProducts[index].amount = (quantity * unitPrice).toFixed(2);
+        updatedProducts[index].amount = (quantity * unitPrice).toString();
       }
       
       return {
