@@ -379,10 +379,15 @@ const POUpload = () => {
             product_name: product.product_name || product.name || product.productName || product.description || '',
             quantity: product.quantity || product.qty || '',
             unit_price: product.unit_price || product.unitPrice || product.price || '',
-            amount: product.amount || product.subtotal || (
+            // amount: product.amount || product.subtotal || (
+            //   product.quantity && product.unit_price 
+            //     ? (parseFloat(product.quantity) * parseFloat(product.unit_price)).toString()
+            amount: product.amount?.toString().replace(/,/g, '') ||
+            product.subtotal?.toString().replace(/,/g, '') ||
+            (
               product.quantity && product.unit_price 
-                ? (parseFloat(product.quantity) * parseFloat(product.unit_price)).toString()
-                : ''
+                ? (parseFloat(product.quantity.toString().replace(/,/g, '')) * parseFloat(product.unit_price.toString().replace(/,/g, ''))).toFixed(2)
+            : ''
             )
           }));
         } else if (Array.isArray(extractedData.items) && extractedData.items.length > 0) {
