@@ -61,7 +61,8 @@ const POUpload = () => {
       (parsedTotal === 0 || isNaN(parsedTotal))
     ) {
       const total = poData.products.reduce((sum, product) => {
-        const amount = parseFloat((product.amount || '').replace(/,/g, '')) || 0;
+        const amountStr = (product.amount || '').replace(/,/g, '');
+        const amount = parseFloat(amountStr) || 0;
         return sum + amount;
       }, 0);
   
@@ -70,7 +71,7 @@ const POUpload = () => {
         total_amount: total.toFixed(2)
       }));
     }
-  }, [poData.products, manualTotalEdit, poData.total_amount]);
+  }, [poData.products, manualTotalEdit, poData.total_amount]);  
 
   // 合計金額の手動編集ハンドラ
   const handleTotalAmountChange = (e) => {
