@@ -64,7 +64,7 @@ const POUpload = () => {
         total_amount: total.toFixed(2)
       }));
     }
-  }, [poData.products, manualTotalEdit]);
+  }, [poData.products, manualTotalEdit, poData.total_amount]);
 
   // 合計金額の手動編集ハンドラ
   const handleTotalAmountChange = (e) => {
