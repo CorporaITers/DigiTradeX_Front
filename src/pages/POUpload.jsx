@@ -902,14 +902,9 @@ const POUpload = () => {
                   type="text" 
                   className="info-input total-amount" 
                   value={poData.total_amount}
-                  // onChange={handleTotalAmountChange}
-                  onChange={(e) => {
-                    if (!manualTotalEdit) {
-                      setManualTotalEdit(true);  // 手動編集モードをオン（手動で初めて変更する時にオン）
-                    }
-                    handleTotalAmountChange(e);  // 金額の変更を処理
-                  }}
-                  disabled={viewMode === 'processing'}
+                  onChange={handleTotalAmountChange}
+                  // disabled={viewMode === 'processing'}
+                  disabled={viewMode === 'processing' || !manualTotalEdit}  // 修正ボタン押すまで編集不可にする
                 />
               </div>
               
