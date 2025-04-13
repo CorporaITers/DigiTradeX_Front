@@ -69,8 +69,8 @@
 }
 
 input[disabled] {
-  background-color: #f0f0f0;
-  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.5; /* 編集不可にするための視覚的なインジケーター */
 }
 
 .info-body {
