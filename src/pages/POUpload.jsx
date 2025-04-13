@@ -479,8 +479,8 @@ const POUpload = () => {
         // 正規化したデータを状態に設定
         setPoData(normalizedData);
         setIsProcessing(false);
-        setManualEditMode(false);
         setViewMode('summary');
+        setManualEditMode(false);
         
         // 成功メッセージの設定
         setSuccessMessage('PO情報の読み取りが完了しました。内容を確認してください。');
@@ -492,8 +492,8 @@ const POUpload = () => {
         // エラーメッセージを文字列として設定
         setErrorMessage(String(errorMessage));
         setIsProcessing(false);
-        setManualEditMode(false);
         setViewMode('upload');
+        setManualEditMode(false);
       }
     } catch (error) {
       console.error('Fetch OCR Data error:', error);
@@ -518,8 +518,8 @@ const POUpload = () => {
       console.error('Final error message:', errorMessage);
       setErrorMessage(String(errorMessage));
       setIsProcessing(false);
-      setManualEditMode(false);
       setViewMode('upload');
+      setManualEditMode(false);
     }
   };
   
