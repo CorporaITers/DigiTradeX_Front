@@ -746,6 +746,8 @@ const POUpload = () => {
     // 修正モードに切り替えるロジックをここに追加
     // setManualTotalEdit(true);  // 手動編集モードをオン
     setManualEditMode(true);
+    setViewMode('summary');   // 修正モードに切り替え（もし必要なら）
+    console.log("Edit mode activated");  // 状態が変わったことを確認
     alert('編集モードに切り替えます');
   };
 
