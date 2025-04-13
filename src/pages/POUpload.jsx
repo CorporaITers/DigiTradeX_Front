@@ -89,7 +89,9 @@ const POUpload = () => {
 
   // 合計金額の手動編集ハンドラ
   const handleTotalAmountChange = (e) => {
-    // setManualTotalEdit(true); // 手動編集モードをオン
+    if (!manualTotalEdit) {
+      setManualTotalEdit(true);  // 手動編集モードをオン
+    }
     setPoData(prevData => ({
       ...prevData,
       total_amount: e.target.value
@@ -781,14 +783,16 @@ const POUpload = () => {
                 <button 
                   className={`action-button ${viewMode === 'summary' ? 'active' : ''}`}
                   onClick={handleRegister}
-                  disabled={viewMode !== 'summary'}
+                  // disabled={viewMode !== 'summary'}
+                  disabled={viewMode === 'processing' || !manualEditMode}
                 >
                   登録する
                 </button>
                 <button 
                   className={`action-button ${viewMode === 'summary' ? 'active' : ''}`}
                   onClick={handleEdit}
-                  disabled={viewMode !== 'summary'}
+                  // disabled={viewMode !== 'summary'}
+                  disabled={viewMode === 'processing' || !manualEditMode}
                 >
                   修正する
                 </button>
@@ -802,7 +806,8 @@ const POUpload = () => {
                   className="info-input" 
                   value={poData.customer_name}
                   onChange={(e) => handleInputChange('customer_name', e.target.value)}
-                  disabled={viewMode === 'processing'}
+                  // disabled={viewMode === 'processing'}
+                  disabled={viewMode === 'processing' || !manualEditMode}
                 />
               </div>
               <div className="info-row">
@@ -812,7 +817,8 @@ const POUpload = () => {
                   className="info-input" 
                   value={poData.po_number}
                   onChange={(e) => handleInputChange('po_number', e.target.value)}
-                  disabled={viewMode === 'processing'}
+                  // disabled={viewMode === 'processing'}
+                  disabled={viewMode === 'processing' || !manualEditMode}
                 />
               </div>
               <div className="info-row">
@@ -822,7 +828,8 @@ const POUpload = () => {
                   className="info-input" 
                   value={poData.currency}
                   onChange={(e) => handleInputChange('currency', e.target.value)}
-                  disabled={viewMode === 'processing'}
+                  // disabled={viewMode === 'processing'}
+                  disabled={viewMode === 'processing' || !manualEditMode}
                 />
               </div>
               
@@ -832,7 +839,8 @@ const POUpload = () => {
                   <button 
                     className="add-product-button"
                     onClick={handleAddProduct}
-                    disabled={viewMode === 'processing' || poData.products.length >= 6}
+                    // disabled={viewMode === 'processing' || poData.products.length >= 6}
+                    disabled={viewMode === 'processing' || !manualEditMode}
                   >
                     <span>+</span> 製品を追加
                   </button>
@@ -846,7 +854,8 @@ const POUpload = () => {
                         <button 
                           className="remove-product-button"
                           onClick={() => handleRemoveProduct(index)}
-                          disabled={viewMode === 'processing'}
+                          // disabled={viewMode === 'processing'}
+                          disabled={viewMode === 'processing' || !manualEditMode}
                         >
                           削除
                         </button>
@@ -859,7 +868,8 @@ const POUpload = () => {
                         className="info-input" 
                         value={product.product_name}
                         onChange={(e) => handleProductChange(index, 'product_name', e.target.value)}
-                        disabled={viewMode === 'processing'}
+                        // disabled={viewMode === 'processing'}
+                        disabled={viewMode === 'processing' || !manualEditMode}
                       />
                     </div>
                     <div className="info-row">
@@ -869,7 +879,8 @@ const POUpload = () => {
                         className="info-input" 
                         value={product.quantity}
                         onChange={(e) => handleProductChange(index, 'quantity', e.target.value)}
-                        disabled={viewMode === 'processing'}
+                        // disabled={viewMode === 'processing'}
+                        disabled={viewMode === 'processing' || !manualEditMode}
                       />
                     </div>
                     <div className="info-row">
@@ -879,7 +890,8 @@ const POUpload = () => {
                         className="info-input" 
                         value={product.unit_price}
                         onChange={(e) => handleProductChange(index, 'unit_price', e.target.value)}
-                        disabled={viewMode === 'processing'}
+                        // disabled={viewMode === 'processing'}
+                        disabled={viewMode === 'processing' || !manualEditMode}
                       />
                     </div>
                     <div className="info-row">
@@ -889,7 +901,8 @@ const POUpload = () => {
                         className="info-input" 
                         value={product.amount}
                         onChange={(e) => handleProductChange(index, 'amount', e.target.value)}
-                        disabled={viewMode === 'processing'}
+                        // disabled={viewMode === 'processing'}
+                        disabled={viewMode === 'processing' || !manualEditMode}
                       />
                     </div>
                   </div>
@@ -915,7 +928,8 @@ const POUpload = () => {
                   className="info-input" 
                   value={poData.payment_terms}
                   onChange={(e) => handleInputChange('payment_terms', e.target.value)}
-                  disabled={viewMode === 'processing'}
+                  // disabled={viewMode === 'processing'}
+                  disabled={viewMode === 'processing' || !manualEditMode}
                 />
               </div>
               <div className="info-row">
@@ -925,7 +939,8 @@ const POUpload = () => {
                   className="info-input" 
                   value={poData.shipping_terms}
                   onChange={(e) => handleInputChange('shipping_terms', e.target.value)}
-                  disabled={viewMode === 'processing'}
+                  // disabled={viewMode === 'processing'}
+                  disabled={viewMode === 'processing' || !manualEditMode}
                 />
               </div>
               <div className="info-row">
@@ -935,7 +950,8 @@ const POUpload = () => {
                   className="info-input" 
                   value={poData.destination}
                   onChange={(e) => handleInputChange('destination', e.target.value)}
-                  disabled={viewMode === 'processing'}
+                  // disabled={viewMode === 'processing'}
+                  disabled={viewMode === 'processing' || !manualEditMode}
                 />
               </div>
             </div>
