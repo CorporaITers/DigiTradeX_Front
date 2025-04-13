@@ -51,19 +51,41 @@ const POUpload = () => {
   const [manualTotalEdit, setManualTotalEdit] = useState(false); // 合計金額の手動編集フラグ
 
   // 合計金額の自動計算（手動編集モードでない場合のみ）
-  useEffect(() => {
-    if (!manualTotalEdit && poData.products && poData.products.length > 0) {
-      const total = poData.products.reduce((sum, product) => {
-        const amount = parseFloat(product.amount) || 0;
-        return sum + amount;
-      }, 0);
+  // useEffect(() => {
+  //   if (!manualTotalEdit && poData.products && poData.products.length > 0) {
+  //     const total = poData.products.reduce((sum, product) => {
+  //       const amount = parseFloat(product.amount) || 0;
+  //       return sum + amount;
+  //     }, 0);
       
-      setPoData(prevData => ({
-        ...prevData,
-        total_amount: total.toFixed(2)
-      }));
+  //     setPoData(prevData => ({
+  //       ...prevData,
+  //       total_amount: total.toFixed(2)
+  //     }));
+  //   }
+  // }, [poData.products, manualTotalEdit]);
+  useEffect(() => {
+    if (!manualTotalEdit) {  // 手動編集モードでない場合のみ計算
+      if (poData.totalAmount) {  // OCRから直接読み取ったtotalAmountが存在する場合
+        // OCRから読み取ったtotalAmountをそのまま使用
+        setPoData(prevData => ({
+          ...prevData,
+          total_amount: parseFloat(poData.totalAmount).toFixed(2)  // 小数点2桁に整形
+        }));
+      } else if (poData.products && poData.products.length > 0) {  // totalAmountがない場合、製品のamountを合計
+        const total = poData.products.reduce((sum, product) => {
+          const amount = parseFloat(product.amount) || 0;
+          return sum + amount;
+        }, 0);
+        
+        // 合計金額を設定
+        setPoData(prevData => ({
+          ...prevData,
+          total_amount: total.toFixed(2)
+        }));
+      }
     }
-  }, [poData.products, manualTotalEdit]);
+  }, [poData.products, poData.totalAmount, manualTotalEdit]);  
 
   // 合計金額の手動編集ハンドラ
   const handleTotalAmountChange = (e) => {
