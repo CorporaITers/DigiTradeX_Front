@@ -89,7 +89,7 @@ const POUpload = () => {
 
   // 合計金額の手動編集ハンドラ
   const handleTotalAmountChange = (e) => {
-    setManualTotalEdit(true); // 手動編集モードをオン
+    // setManualTotalEdit(true); // 手動編集モードをオン
     setPoData(prevData => ({
       ...prevData,
       total_amount: e.target.value
@@ -739,6 +739,7 @@ const POUpload = () => {
   // 修正モードのトグル
   const handleEdit = () => {
     // 修正モードに切り替えるロジックをここに追加
+    setManualTotalEdit(true);  // 手動編集モードをオン
     alert('編集モードに切り替えます');
   };
 
@@ -901,7 +902,13 @@ const POUpload = () => {
                   type="text" 
                   className="info-input total-amount" 
                   value={poData.total_amount}
-                  onChange={handleTotalAmountChange}
+                  // onChange={handleTotalAmountChange}
+                  onChange={(e) => {
+                    if (!manualTotalEdit) {
+                      setManualTotalEdit(true);  // 手動編集モードをオン（手動で初めて変更する時にオン）
+                    }
+                    handleTotalAmountChange(e);  // 金額の変更を処理
+                  }}
                   disabled={viewMode === 'processing'}
                 />
               </div>
