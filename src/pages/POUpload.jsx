@@ -48,7 +48,7 @@ const POUpload = () => {
   const [showCompletedDialog, setShowCompletedDialog] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
-  const [manualTotalEdit, setManualTotalEdit] = useState(false); // 合計金額の手動編集フラグ
+  // const [manualTotalEdit, setManualTotalEdit] = useState(false); // 合計金額の手動編集フラグ
   const [manualEditMode, setManualEditMode] = useState(false);
 
   // 合計金額の自動計算（手動編集モードでない場合のみ）
@@ -66,7 +66,7 @@ const POUpload = () => {
   //   }
   // }, [poData.products, manualTotalEdit]);
   useEffect(() => {
-    if (!manualTotalEdit) {  // 手動編集モードでない場合のみ計算
+    if (!manualEditMode) {  // 手動編集モードでない場合のみ計算
       if (poData.totalAmount) {  // OCRから直接読み取ったtotalAmountが存在する場合
         // OCRから読み取ったtotalAmountをそのまま使用
         setPoData(prevData => ({
@@ -86,13 +86,11 @@ const POUpload = () => {
         }));
       }
     }
-  }, [poData.products, poData.totalAmount, manualTotalEdit]);  
+  }, [poData.products, poData.totalAmount, manualEditMode]);  
 
   // 合計金額の手動編集ハンドラ
   const handleTotalAmountChange = (e) => {
-    if (!manualTotalEdit) {
-      setManualTotalEdit(true);  // 手動編集モードをオン
-    }
+    // setManualEditMode(true);  // 手動編集モードをオン
     setPoData(prevData => ({
       ...prevData,
       total_amount: e.target.value
@@ -115,8 +113,9 @@ const POUpload = () => {
     setViewMode('processing');
     setErrorMessage('');
     setSuccessMessage('');
-    setManualTotalEdit(false);
-    
+    // setManualTotalEdit(false);
+    setManualEditMode(false);
+
     try {
       const formData = new FormData();
       formData.append('file', file);
@@ -396,7 +395,7 @@ const POUpload = () => {
         console.log('Successfully extracted OCR data:', extractedData);
 
         console.log("manualEditMode is", manualEditMode);
-        
+
         // 製品情報の処理
         let products = [];
         
@@ -588,7 +587,8 @@ const POUpload = () => {
   const resetToManualEntry = () => {
     setViewMode('upload');
     setUploadedFile(null);
-    setManualTotalEdit(false);
+    // setManualTotalEdit(false);
+    setManualEditMode(false);
     setPoData({
       // PurchaseOrdersテーブルのフィールド
       customer_name: '',
@@ -744,7 +744,7 @@ const POUpload = () => {
   // 修正モードのトグル
   const handleEdit = () => {
     // 修正モードに切り替えるロジックをここに追加
-    setManualTotalEdit(true);  // 手動編集モードをオン
+    // setManualTotalEdit(true);  // 手動編集モードをオン
     setManualEditMode(true);
     alert('編集モードに切り替えます');
   };
@@ -787,16 +787,14 @@ const POUpload = () => {
                 <button 
                   className={`action-button ${viewMode === 'summary' ? 'active' : ''}`}
                   onClick={handleRegister}
-                  // disabled={viewMode !== 'summary'}
-                  disabled={viewMode === 'processing' || !manualEditMode}
+                  disabled={viewMode !== 'summary'}
                 >
                   登録する
                 </button>
                 <button 
                   className={`action-button ${viewMode === 'summary' ? 'active' : ''}`}
                   onClick={handleEdit}
-                  // disabled={viewMode !== 'summary'}
-                  disabled={viewMode === 'processing' || !manualEditMode}
+                  disabled={viewMode !== 'summary'}
                 >
                   修正する
                 </button>
@@ -921,7 +919,7 @@ const POUpload = () => {
                   value={poData.total_amount}
                   onChange={handleTotalAmountChange}
                   // disabled={viewMode === 'processing'}
-                  disabled={viewMode === 'processing' || !manualTotalEdit}  // 修正ボタン押すまで編集不可にする
+                  disabled={viewMode === 'processing' || !manualEditMode}  // 修正ボタン押すまで編集不可にする
                 />
               </div>
               
