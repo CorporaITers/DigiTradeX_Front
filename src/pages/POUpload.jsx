@@ -230,6 +230,7 @@ const POUpload = () => {
               total_amount: (13500 + 13600 + 9150).toString()
             });
             setIsProcessing(false);
+            setManualEditMode(false);
             setViewMode('summary');
           }
         } else {
@@ -243,6 +244,7 @@ const POUpload = () => {
           console.error('API Error:', errorMessage);
           setErrorMessage(errorMessage);
           setIsProcessing(false);
+          setManualEditMode(false);
           setViewMode('upload');
         }
       } else {
@@ -284,6 +286,7 @@ const POUpload = () => {
     
       setErrorMessage(`アップロードエラー: ${errorMessage}`);
       setIsProcessing(false);
+      setManualEditMode(false);
       setViewMode('upload');
     }
   };
@@ -319,6 +322,7 @@ const POUpload = () => {
         console.error('OCR processing failed:', failureReason);
         setErrorMessage(String(failureReason));
         setIsProcessing(false);
+        setManualEditMode(false);
         setViewMode('upload');
       } else {
         // まだ処理中 - 1秒後に再確認
@@ -348,6 +352,7 @@ const POUpload = () => {
       console.error('Final error message:', errorMessage);
       setErrorMessage(String(errorMessage));
       setIsProcessing(false);
+      setManualEditMode(false);
       setViewMode('upload');
     }
   };
@@ -473,6 +478,7 @@ const POUpload = () => {
         // 正規化したデータを状態に設定
         setPoData(normalizedData);
         setIsProcessing(false);
+        setManualEditMode(false);
         setViewMode('summary');
         
         // 成功メッセージの設定
@@ -485,6 +491,7 @@ const POUpload = () => {
         // エラーメッセージを文字列として設定
         setErrorMessage(String(errorMessage));
         setIsProcessing(false);
+        setManualEditMode(false);
         setViewMode('upload');
       }
     } catch (error) {
@@ -510,6 +517,7 @@ const POUpload = () => {
       console.error('Final error message:', errorMessage);
       setErrorMessage(String(errorMessage));
       setIsProcessing(false);
+      setManualEditMode(false);
       setViewMode('upload');
     }
   };
@@ -745,8 +753,6 @@ const POUpload = () => {
     // 修正モードに切り替えるロジックをここに追加
     // setManualTotalEdit(true);  // 手動編集モードをオン
     setManualEditMode(true);
-    setViewMode('summary');   // 修正モードに切り替え（もし必要なら）
-    console.log("Edit mode activated");  // 状態が変わったことを確認
     alert('編集モードに切り替えます');
   };
 
