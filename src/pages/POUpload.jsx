@@ -369,7 +369,8 @@ const POUpload = () => {
       
       if (extractedData) {
         console.log('Successfully extracted OCR data:', extractedData);
-        
+        console.log("Total amount displayed:", poData.total_amount);
+
         // 製品情報の処理
         let products = [];
         
