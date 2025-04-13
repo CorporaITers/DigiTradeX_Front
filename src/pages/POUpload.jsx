@@ -49,6 +49,7 @@ const POUpload = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   const [manualTotalEdit, setManualTotalEdit] = useState(false); // 合計金額の手動編集フラグ
+  const [manualEditMode, setManualEditMode] = useState(false);
 
   // 合計金額の自動計算（手動編集モードでない場合のみ）
   // useEffect(() => {
@@ -742,6 +743,7 @@ const POUpload = () => {
   const handleEdit = () => {
     // 修正モードに切り替えるロジックをここに追加
     setManualTotalEdit(true);  // 手動編集モードをオン
+    setManualEditMode(true);
     alert('編集モードに切り替えます');
   };
 
