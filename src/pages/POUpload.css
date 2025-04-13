@@ -68,6 +68,11 @@
   cursor: not-allowed;
 }
 
+input[disabled] {
+  background-color: #f0f0f0;
+  cursor: not-allowed;
+}
+
 .info-body {
   padding: 1rem;
   flex: 1;
