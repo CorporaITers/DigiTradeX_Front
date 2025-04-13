@@ -65,6 +65,7 @@ const POUpload = () => {
   //     }));
   //   }
   // }, [poData.products, manualTotalEdit]);
+  
   useEffect(() => {
     if (!manualEditMode) {  // 手動編集モードでない場合のみ計算
       if (poData.totalAmount) {  // OCRから直接読み取ったtotalAmountが存在する場合
@@ -230,8 +231,8 @@ const POUpload = () => {
               total_amount: (13500 + 13600 + 9150).toString()
             });
             setIsProcessing(false);
-            setManualEditMode(false);
             setViewMode('summary');
+            setManualEditMode(false);
           }
         } else {
           // エラーメッセージを詳細に変換
@@ -244,8 +245,8 @@ const POUpload = () => {
           console.error('API Error:', errorMessage);
           setErrorMessage(errorMessage);
           setIsProcessing(false);
-          setManualEditMode(false);
           setViewMode('upload');
+          setManualEditMode(false);
         }
       } else {
         throw new Error('APIからの応答にデータがありません');
