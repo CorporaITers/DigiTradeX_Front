@@ -395,6 +395,8 @@ const POUpload = () => {
       if (extractedData) {
         console.log('Successfully extracted OCR data:', extractedData);
 
+        console.log("manualEditMode is", manualEditMode);
+        
         // 製品情報の処理
         let products = [];
         
