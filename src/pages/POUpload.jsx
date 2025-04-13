@@ -394,8 +394,6 @@ const POUpload = () => {
       if (extractedData) {
         console.log('Successfully extracted OCR data:', extractedData);
 
-        console.log("manualEditMode is", manualEditMode);
-
         // 製品情報の処理
         let products = [];
         
@@ -468,7 +466,8 @@ const POUpload = () => {
         };
         
         // 合計金額は製品の金額合計から計算（useEffectで自動計算）
-        
+        console.log("manualEditMode is", manualEditMode);
+
         console.log('Normalized data for database:', normalizedData);
         
         // 正規化したデータを状態に設定
