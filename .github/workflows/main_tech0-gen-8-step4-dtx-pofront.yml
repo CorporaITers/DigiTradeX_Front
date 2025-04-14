@@ -61,4 +61,4 @@ jobs:
           app-name: 'tech0-gen-8-step4-dtx-pofront'
           slot-name: 'Production'
           package: .
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_B87D6E8CA00449988976E058F658F9F4 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_4B0614AE9B954E11B6E59CE41C44097C }}
