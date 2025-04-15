@@ -42,15 +42,14 @@ const POUpload = () => {
     memo: '',
 
     // OCR結果用フィールド
-    ocr_raw_text: '',
-    totalAmount: ''  // OCRから取得した合計金額
+    ocr_raw_text: ''
   });
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [showCompletedDialog, setShowCompletedDialog] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
-  // const [manualTotalEdit, setManualTotalEdit] = useState(false); // 合計金額の手動編集フラグ
-  const [manualEditMode, setManualEditMode] = useState(false); // 修正モード
+  const [manualTotalEdit, setManualTotalEdit] = useState(false); // 合計金額の手動編集フラグ
+  // const [manualEditMode, setManualEditMode] = useState(false); // 修正モード
 
   // 合計金額の自動計算（手動編集モードでない場合のみ）
   useEffect(() => {
@@ -82,8 +81,8 @@ const POUpload = () => {
 
   // 合計金額の手動編集ハンドラ
   const handleTotalAmountChange = (e) => {
-    // setManualTotalEdit(true); // 手動編集モードをオン
-    setManualEditMode(true); // 手動編集モードをオン
+    setManualTotalEdit(true); // 手動編集モードをオン
+    // setManualEditMode(true); // 手動編集モードをオン
     setPoData(prevData => ({
       ...prevData,
       total_amount: e.target.value
@@ -91,7 +90,7 @@ const POUpload = () => {
   };
 
   // サマリー情報のフィールドを手動編集するモードに変更
-  const isEditable = viewMode === 'summary' && manualEditMode;
+  const isEditable = viewMode === 'summary' && manualTotalEdit;
 
   // ファイルアップロード処理
   const handleFileUpload = async (file) => {
@@ -614,7 +613,6 @@ const POUpload = () => {
 
       // OCR結果用フィールド
       ocr_raw_text: '',
-      totalAmount: ''  // OCRから取得した合計金額
     });
     setErrorMessage('');
     setSuccessMessage('');
@@ -739,7 +737,7 @@ const POUpload = () => {
   // 修正モードのトグル
   const handleEdit = () => {
     // 修正モードに切り替えるロジックをここに追加
-    setManualEditMode(true);  // 手動編集モードをオン
+    setManualTotalEdit(true); // 手動編集モードをオン
     alert('編集モードに切り替えます');
   };
 
