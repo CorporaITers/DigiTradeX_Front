@@ -763,7 +763,7 @@ const POUpload = () => {
                   onClick={handleEdit}
                   disabled={viewMode !== 'summary'}
                 >
-                  修正する
+                  編集する
                 </button>
               </div>
             </div>
