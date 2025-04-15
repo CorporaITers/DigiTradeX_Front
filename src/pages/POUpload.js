@@ -42,7 +42,8 @@ const POUpload = () => {
     memo: '',
 
     // OCR結果用フィールド
-    ocr_raw_text: ''
+    ocr_raw_text: '',
+    totalAmount: ''  // OCRから取得した合計金額
   });
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [showCompletedDialog, setShowCompletedDialog] = useState(false);
@@ -58,11 +59,11 @@ const POUpload = () => {
     //     return sum + amount;
     //   }, 0);
     if (!manualTotalEdit) {  // 手動編集モードでない場合のみ計算
-      if (poData.total_amount) {  // OCRから直接読み取ったtotal_amountが存在する場合
+      if (poData.totalAmount) {  // OCRから直接読み取ったtotal_amountが存在する場合
         // OCRから読み取ったtotal_amountをそのまま使用
         setPoData(prevData => ({
           ...prevData,
-          total_amount: parseFloat(poData.total_amount).toFixed(2)  // 小数点2桁に整形
+          total_amount: parseFloat(poData.totalAmount).toFixed(2)  // 小数点2桁に整形
         }));
       } else if (poData.products && poData.products.length > 0) {  // total_amountがない場合、製品のamountを合計
         const total = poData.products.reduce((sum, product) => {
@@ -76,7 +77,7 @@ const POUpload = () => {
       }));
     }
   }
-}, [poData.products, poData.total_amount, manualTotalEdit]);
+}, [poData.products, poData.totalAmount, manualTotalEdit]);
 
   // 合計金額の手動編集ハンドラ
   const handleTotalAmountChange = (e) => {
@@ -601,7 +602,8 @@ const POUpload = () => {
       memo: '',
 
       // OCR結果用フィールド
-      ocr_raw_text: ''
+      ocr_raw_text: '',
+      totalAmount: ''  // OCRから取得した合計金額
     });
     setErrorMessage('');
     setSuccessMessage('');
