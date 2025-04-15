@@ -391,7 +391,7 @@ const POUpload = () => {
         // OCRで抽出したtotalAmountをpoDataにセット
         setPoData(prevData => ({
           ...prevData,
-          total_amount: extractedData.totalAmount.toFixed(2)  // totalAmountをそのまま使用
+          total_amount: extractedData.total_amount.toFixed(2)  // totalAmountをそのまま使用
         }));
 
         // 製品情報の処理
