@@ -60,7 +60,7 @@ const POUpload = () => {
     //   }, 0);
     if (!manualTotalEdit) {  // 手動編集モードでない場合のみ計算
       if (poData.total_amount) {  // OCRから直接読み取ったtotalAmountが存在する場合
-        // OCRから読み取ったtotal_amountをそのまま使用
+        // OCRから読み取ったtotalAmountをそのまま使用
         setPoData(prevData => ({
           ...prevData,
           total_amount: parseFloat(poData.total_amount).toFixed(2)  // 小数点2桁に整形
@@ -90,7 +90,7 @@ const POUpload = () => {
   };
 
   // サマリー情報のフィールドを手動編集するモードに変更
-  const isEditable = viewMode === 'summary' && manualTotalEdit;
+  // const isEditable = viewMode === 'summary' && manualTotalEdit;
 
   // ファイルアップロード処理
   const handleFileUpload = async (file) => {
@@ -800,8 +800,8 @@ const POUpload = () => {
                   className="info-input" 
                   value={poData.customer_name}
                   onChange={(e) => handleInputChange('customer_name', e.target.value)}
-                  // disabled={viewMode === 'processing'}
-                  disabled={!isEditable}  // 修正モードでないときは編集不可
+                  disabled={viewMode === '!summary'}
+                  // disabled={!isEditable}  // 修正モードでないときは編集不可
                 />
               </div>
               <div className="info-row">
@@ -811,8 +811,8 @@ const POUpload = () => {
                   className="info-input" 
                   value={poData.po_number}
                   onChange={(e) => handleInputChange('po_number', e.target.value)}
-                  // disabled={viewMode === 'processing'}
-                  disabled={!isEditable}  // 修正モードでないときは編集不可
+                  disabled={viewMode === '!summary'}
+                  // disabled={!isEditable}  // 修正モードでないときは編集不可
                 />
               </div>
               <div className="info-row">
@@ -822,8 +822,8 @@ const POUpload = () => {
                   className="info-input" 
                   value={poData.currency}
                   onChange={(e) => handleInputChange('currency', e.target.value)}
-                  // disabled={viewMode === 'processing'}
-                  disabled={!isEditable}  // 修正モードでないときは編集不可
+                  disabled={viewMode === '!summary'}
+                  // disabled={!isEditable}  // 修正モードでないときは編集不可
                 />
               </div>
               
@@ -833,8 +833,9 @@ const POUpload = () => {
                   <button 
                     className="add-product-button"
                     onClick={handleAddProduct}
-                    // disabled={viewMode === 'processing' || poData.products.length >= 6}
-                    disabled={!isEditable || poData.products.length >= 6}            >
+                    disabled={viewMode === '!summary' || poData.products.length >= 6}
+                    // disabled={!isEditable || poData.products.length >= 6}
+                  >
                     <span>+</span> 製品を追加
                   </button>
                 </div>
@@ -847,8 +848,8 @@ const POUpload = () => {
                         <button 
                           className="remove-product-button"
                           onClick={() => handleRemoveProduct(index)}
-                          // disabled={viewMode === 'processing'}
-                          disabled={!isEditable}  // 修正モードでないときは編集不可
+                          disabled={viewMode === '!summary'}
+                          // disabled={!isEditable}  // 修正モードでないときは編集不可
                         >
                           削除
                         </button>
@@ -861,8 +862,8 @@ const POUpload = () => {
                         className="info-input" 
                         value={product.product_name}
                         onChange={(e) => handleProductChange(index, 'product_name', e.target.value)}
-                        // disabled={viewMode === 'processing'}
-                        disabled={!isEditable}  // 修正モードでないときは編集不可
+                        disabled={viewMode === '!summary'}
+                        // disabled={!isEditable}  // 修正モードでないときは編集不可
                       />
                     </div>
                     <div className="info-row">
@@ -872,8 +873,8 @@ const POUpload = () => {
                         className="info-input" 
                         value={product.quantity}
                         onChange={(e) => handleProductChange(index, 'quantity', e.target.value)}
-                        // disabled={viewMode === 'processing'}
-                        disabled={!isEditable}  // 修正モードでないときは編集不可
+                        disabled={viewMode === '!summary'}
+                        // disabled={!isEditable}  // 修正モードでないときは編集不可
                       />
                     </div>
                     <div className="info-row">
@@ -883,8 +884,8 @@ const POUpload = () => {
                         className="info-input" 
                         value={product.unit_price}
                         onChange={(e) => handleProductChange(index, 'unit_price', e.target.value)}
-                        // disabled={viewMode === 'processing'}
-                        disabled={!isEditable}  // 修正モードでないときは編集不可
+                        disabled={viewMode === '!summary'}
+                        // disabled={!isEditable}  // 修正モードでないときは編集不可
                       />
                     </div>
                     <div className="info-row">
@@ -894,8 +895,8 @@ const POUpload = () => {
                         className="info-input" 
                         value={product.amount}
                         onChange={(e) => handleProductChange(index, 'amount', e.target.value)}
-                        // disabled={viewMode === 'processing'}
-                        disabled={!isEditable}  // 修正モードでないときは編集不可
+                        disabled={viewMode === '!summary'}
+                        // disabled={!isEditable}  // 修正モードでないときは編集不可
                       />
                     </div>
                   </div>
@@ -909,8 +910,8 @@ const POUpload = () => {
                   className="info-input total-amount" 
                   value={poData.total_amount}
                   onChange={handleTotalAmountChange}
-                  // disabled={viewMode === 'processing'}
-                  disabled={!isEditable}  // 修正モードでないときは編集不可
+                  disabled={viewMode === '!summary'}
+                  // disabled={!isEditable}  // 修正モードでないときは編集不可
                 />
               </div>
               
@@ -921,8 +922,8 @@ const POUpload = () => {
                   className="info-input" 
                   value={poData.payment_terms}
                   onChange={(e) => handleInputChange('payment_terms', e.target.value)}
-                  // disabled={viewMode === 'processing'}
-                  disabled={!isEditable}  // 修正モードでないときは編集不可
+                  disabled={viewMode === '!summary'}
+                  // disabled={!isEditable}  // 修正モードでないときは編集不可
                 />
               </div>
               <div className="info-row">
@@ -932,8 +933,8 @@ const POUpload = () => {
                   className="info-input" 
                   value={poData.shipping_terms}
                   onChange={(e) => handleInputChange('shipping_terms', e.target.value)}
-                  // disabled={viewMode === 'processing'}
-                  disabled={!isEditable}  // 修正モードでないときは編集不可
+                  disabled={viewMode === '!summary'}
+                  // disabled={!isEditable}  // 修正モードでないときは編集不可
                 />
               </div>
               <div className="info-row">
@@ -943,8 +944,8 @@ const POUpload = () => {
                   className="info-input" 
                   value={poData.destination}
                   onChange={(e) => handleInputChange('destination', e.target.value)}
-                  // disabled={viewMode === 'processing'}
-                  disabled={!isEditable}  // 修正モードでないときは編集不可
+                  disabled={viewMode === '!summary'}
+                  // disabled={!isEditable}  // 修正モードでないときは編集不可
                 />
               </div>
             </div>
