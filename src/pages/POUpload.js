@@ -828,8 +828,8 @@ const POUpload = () => {
                     // className="add-product-button"
                     className={`add-product-button ${viewMode === 'summary' ? 'active' : ''}`}
                     onClick={handleAddProduct}
-                    disabled={viewMode !== 'summary' || poData.products.length >= 6}
-                    // disabled={!isEditable || poData.products.length >= 6}
+                    // disabled={viewMode !== 'summary' || poData.products.length >= 6}
+                    disabled={!isEditable || poData.products.length >= 6}
                   >
                     <span>+</span> 製品を追加
                   </button>
