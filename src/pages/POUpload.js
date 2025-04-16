@@ -89,7 +89,7 @@ const POUpload = () => {
     }));
   };
 
-  サマリー情報のフィールドを手動編集するモードに変更
+  // サマリー情報のフィールドを手動編集するモードに変更
   const isEditable = viewMode === 'summary' && manualTotalEdit;
 
   // ファイルアップロード処理
