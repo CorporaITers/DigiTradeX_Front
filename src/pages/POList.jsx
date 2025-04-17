@@ -923,7 +923,15 @@ const POList = () => {
                       <td className="border p-2">{po.manager || ""}</td>
                       <td className="border p-2">{po.organization || ""}</td>
                       <td className="border p-2">{po.invoiceNumber || ""}</td>
-                      <td className="border p-2">{po.poNumber || ""}</td>
+                      {/*// PO番号がボタンになり、クリックすると /booking/{id} に遷移する。POデータも一緒に送る。*/}
+                      <td className="border p-2">  
+                        <button
+                          onClick={() => navigate(`/booking/${po.id}`, { state: { po } })}
+                          className="text-blue-600 underline hover:text-blue-800"
+                        >
+                          {po.poNumber || ""}
+                        </button>
+                      </td>
                       <td className="border p-2">{po.customer || ""}</td>
                       <td className="border p-2">{po.productName || ""}</td>
                       <td className="border p-2">{po.quantity || ""}</td>
