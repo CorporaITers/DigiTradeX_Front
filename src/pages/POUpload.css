@@ -167,6 +167,17 @@
   font-size: 0.8rem;
 }
 
+.remove-product-button.active {
+  background-color: #f44336;
+  color: white;
+}
+
+.remove-product-button:disabled {
+  background-color: #ccc;
+  color: #666;
+  cursor: not-allowed;
+}
+
 .total-row {
   font-weight: bold;
 }
